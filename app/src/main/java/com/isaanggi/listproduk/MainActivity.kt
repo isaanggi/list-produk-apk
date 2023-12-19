@@ -30,8 +30,11 @@ import androidx.compose.material3.Card
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import androidx.compose.ui.res.painterResource
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +95,9 @@ fun ProductCard(product: Product) {
                     ImageRequest.Builder(LocalContext.current).data(data = product.thumbnail)
                         .apply(block = fun ImageRequest.Builder.() {
                             crossfade(true)
-                        }).build()
+                        }).build(),
+                    error = painterResource(R.drawable.ic_broken_image),
+                    placeholder = painterResource(R.drawable.loading_img),
                 ),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
@@ -103,7 +108,6 @@ fun ProductCard(product: Product) {
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Text Column
             Column {
                 Text(text = "Name: ${product.title}", fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(2.dp))
